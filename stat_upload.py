@@ -157,7 +157,7 @@ def add_batch_matches_and_update_stats(new_matches_xlsx):
     print("Объединение данных...")
 
     # Объединяем существующую статистику с новыми данными
-    updated_stats = pd.concat([player_stats_df, pd.DataFrame(new_stats_rows)], ignore_index=True)
+    updated_stats = pd.concat([player_stats_df, pd.DataFrame(data=new_stats_rows)], ignore_index=True)
 
     print("Сохранение обновленной статистики...")
     updated_stats.to_csv('player_stats.csv', index=False)

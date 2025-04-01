@@ -27,7 +27,7 @@ async def upload_stat_handler(message: Message, state: FSMContext) -> None:
 async def take_file(message: Message, state: FSMContext) -> None:
     if message.document.file_name.endswith(".xlsx"):
         save_path = await download_file(message)
-        await asyncio.to_thread(add_batch_matches_and_update_stats(save_path))
+        updated_stats = await asyncio.to_thread(add_batch_matches_and_update_stats, new_matches_xlsx=save_path)
         os.remove(save_path)
         logger.debug("The file was successfuly deleted")
         await state.clear()

@@ -67,12 +67,13 @@ async def take_court_type(call: CallbackQuery, state: FSMContext) -> None:
     except TelegramBadRequest as exc:
         logger.debug(exc)
     data = await state.get_data()
-    result = await asyncio.to_thread(make_prediction(name1=data["first_player"],
+    result = await asyncio.to_thread(make_prediction, name1=data["first_player"],
                                             name2=data["second_player"],
                                             r1=data.get("first_rating"),
                                             r2=data.get("second_rating"),
                                             court=call.data.split(":")[1]
-                                            ))
+                                            )
+    await call.message.answer(text=result.get("prediction_label"))
 
 
 @router.callback_query(StateFilter(MakePrediction.write_first_rating, MakePrediction.write_second_rating),
